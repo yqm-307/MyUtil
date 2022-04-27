@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yqm/Git/MyUtil/structure/List/Basic_List.hpp
+cstddef
+-
+DefaultListNode.hpp
+/home/yqm/Git/MyUtil/structure/List/DefaultListNode.hpp
+
+/home/yqm/Git/MyUtil/structure/List/DLinkList.hpp
+Basic_List.hpp
+/home/yqm/Git/MyUtil/structure/List/Basic_List.hpp
+functional
+-
+
+/home/yqm/Git/MyUtil/structure/List/DefaultListNode.hpp
+
+/home/yqm/Git/MyUtil/structure/List/MainTest.cpp
+iostream
+-
+time.h
+-
+stdlib.h
+-
+Basic_List.hpp
+/home/yqm/Git/MyUtil/structure/List/Basic_List.hpp
+DLinkList.hpp
+/home/yqm/Git/MyUtil/structure/List/DLinkList.hpp
+

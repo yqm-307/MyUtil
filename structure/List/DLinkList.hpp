@@ -10,63 +10,81 @@
  */
 #pragma once
 #include "Basic_List.hpp"
-
+#include <functional>
 
 
 
 template<typename T,class Node = ListNode<T>>
-class DLinkList:Basic_List<T,Node>
+class DLinkList:public Basic_List<T,Node>
 {
 public:
+    typedef Node NodeType;
+
+public:
+    typedef Node* ListNodePtr ; 
+    typedef std::function<void(Node*)> TraverseFunc;
+
     void push_back(const T& e)
     {
-        _size++;
-        trailer->insertAsLast(e);
+        this->insertAsLast(e);
     }
     void push_front(const T& e)
     {
-        _size++;
-        header->insertAsPred(e);
+        this->insertAsFirst(e);
     }
     //移出除尾结点
     void pop_back()
     {
-        ListNodePtr<T> tmp = trailer->pred->pred;
-        earse(trailer->pred);
+        ListNodePtr tmp = this->trailer->pred->pred;
+        this->earse(this->trailer->pred);
     }
     //移出首节点
     void pop_front()
     {
-        ListNodePtr<T> tmp = header->succ->succ;
-        erase(header->succ);
+        ListNodePtr tmp = this->header->succ->succ;
+        this->erase(this->header->succ);
     }
     //根据位置删除
     void remove(Rank r)
     {
-        earse(r);
+        this->earse(r);
     }
     //根据数据匹配删除第一个
     void remove(const T&e)
     {
-        earse();
+        auto p = find(e);
+        if(p == this->end())
+            return;
+        earse(this->find());
     }
+    //排序
+    void sort(){ merge(this->header->succ,this->_size);}
 
-    void sort(){ merge(header->succ,_size);}
+    //遍历
+    void traverse(TraverseFunc&& func)
+    {
+        auto p = this->begin();
+        while (p!=this->end())
+        {
+            func(p);
+            p = p->succ;
+        }
+    }
 protected:
-    void merge(ListNodePtr<T> p,int n)
+    void merge(ListNodePtr p,int n)
 	{
 		if( n < 2 ) return;	//递归基	如果只有1个元素，就开始递归
 		int m = n >> 1;	//中点
 
-		ListNodePtr<T> q = p; for( int i = 0; i < m; ++i ) q = q->succ;	//均分列表
+		ListNodePtr q = p; for( int i = 0; i < m; ++i ) q = q->succ;	//均分列表
 		merge(p,m);	merge(q,n - m);
 		//归并
 		p = Sort(p,m,*this,q,n - m);
 	}
 
-	ListNodePtr<T> Sort(ListNodePtr<T> p,int n,Basic_List<T>& L,ListNodePtr<T> q,int m)
+	ListNodePtr Sort(ListNodePtr p,int n,Basic_List<T,Node>& L,ListNodePtr q,int m)
 	{
-		ListNodePtr<T> pp = p->pred;	//归并后，p一定不是原点，因此要记录原点
+		ListNodePtr pp = p->pred;	//归并后，p一定不是原点，因此要记录原点
 		//表一和表二，进行一次排序，假设表有序；
 		while( m > 0 && q != p ) {	//将q归并到p中，如果剩余的是q则需要移动q的剩余列表；否则，p的剩余，就不需要移动列表
 			if( n > 0 && (p->data >= q->data) ) {
@@ -80,6 +98,8 @@ protected:
 		}
 		return pp->succ;
 	}
+
+
 
 };
 
