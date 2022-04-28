@@ -36,7 +36,7 @@ public:
     void pop_back()
     {
         ListNodePtr tmp = this->trailer->pred->pred;
-        this->earse(this->trailer->pred);
+        this->erase(this->trailer->pred);
     }
     //移出首节点
     void pop_front()
@@ -47,15 +47,11 @@ public:
     //根据位置删除
     void remove(Rank r)
     {
-        this->earse(r);
+        this->erase(r);
     }
-    //根据数据匹配删除第一个
-    void remove(const T&e)
+    void remove(ListNodePtr p)
     {
-        auto p = find(e);
-        if(p == this->end())
-            return;
-        earse(this->find());
+        this->erase(p);
     }
     //排序
     void sort(){ merge(this->header->succ,this->_size);}
