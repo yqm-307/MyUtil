@@ -8,6 +8,9 @@
  * @copyright Copyright (c) 2022
  * 
  */
+namespace YqmUtil::Structure::List
+{
 
+}
 
 

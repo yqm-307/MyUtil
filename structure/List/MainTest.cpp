@@ -5,6 +5,7 @@
 #include "DLinkList.hpp"
 using namespace std;
 
+using namespace YqmUtil::Structure::List;
 
 typedef std::function<void(DLinkList<int>::NodeType* node)> func;
 func print = [](DLinkList<int>::NodeType* node){
@@ -154,7 +155,7 @@ private:
 int main()
 {
 	//首尾元素操作
-	DLinkList_Test test;
-	test.Main();
+	//DLinkList_Test test;
+	//test.Main();
 
 }

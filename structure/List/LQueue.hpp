@@ -9,3 +9,8 @@
  * 
  */
 
+
+namespace YqmUtil::Structure::List
+{
+
+}

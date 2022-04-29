@@ -1,5 +1,9 @@
 #pragma once
 
+
+namespace YqmUtil::Structure::List
+{
+
 typedef int Rank;		//秩
 template<class T>
 struct ListNode;
@@ -31,3 +35,4 @@ public:
 	ListNode* succ;//后继
 	ListNode* pred;//前驱
 };
+}

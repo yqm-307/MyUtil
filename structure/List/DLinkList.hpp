@@ -12,8 +12,8 @@
 #include "Basic_List.hpp"
 #include <functional>
 
-
-
+namespace YqmUtil::Structure::List
+{
 template<typename T,class Node = ListNode<T>>
 class DLinkList:public Basic_List<T,Node>
 {
@@ -54,7 +54,7 @@ public:
         this->erase(p);
     }
     //排序
-    void sort(){ merge(this->header->succ,this->_size);}
+    void sort(){ merge(this->header->succ,this->size_);}
 
     //遍历
     void traverse(TraverseFunc&& func)
@@ -99,3 +99,4 @@ protected:
 
 };
 
+}

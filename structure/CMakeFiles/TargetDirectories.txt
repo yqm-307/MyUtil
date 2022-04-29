@@ -1,5 +1,0 @@
-/home/yqm/Git/MyUtil/structure/CMakeFiles/rebuild_cache.dir
-/home/yqm/Git/MyUtil/structure/CMakeFiles/edit_cache.dir
-/home/yqm/Git/MyUtil/structure/List/CMakeFiles/rebuild_cache.dir
-/home/yqm/Git/MyUtil/structure/List/CMakeFiles/edit_cache.dir
-/home/yqm/Git/MyUtil/structure/List/CMakeFiles/test.dir
