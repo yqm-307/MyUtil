@@ -13,17 +13,13 @@
 
 namespace YqmUtil::Structure::Array
 {
-
-
 template<class T>
 class stack: public Simple_Array<T>
 {
 public:
     void pop() {this->earse(this->size_-1,this->size_-1);}
     T& top() {return this->_array[this->size_-1];}
-    void push(T&data) { insert(this->size_,data);}
+    void push(T&data) { this->insert(this->size_,data);}
     void push(T&&data) { push(data);}
 };
-
-
 }

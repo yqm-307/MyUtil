@@ -8,8 +8,7 @@
  * @copyright Copyright (c) 2022
  * 
  */
-#include <thread>
-#include <chrono>
+#include "universal.h"
 
 
 namespace YqmUtil::timer
@@ -37,7 +36,10 @@ public:
         auto a = std::chrono::duration_cast<Clock>(p);
         return a.count();
     }
-
+    void recycle()
+    {
+        begin = std::chrono::system_clock::now();
+    }
 private:
     time_ns begin;
     time_ns end;  

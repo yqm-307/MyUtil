@@ -1,5 +1,5 @@
 #include "Basic_Array.h"
-
+#include <string.h>
 namespace YqmUtil::Structure::Array
 {
 
@@ -36,6 +36,7 @@ protected:
 			_array[indexl] = _array[indexl + n];
 		}
 		size_ -= n;
+        shrink();   //是否缩容
 		return indexl;	
 	}	
 	virtual size_t insert(size_t index,const T& data)
@@ -49,7 +50,20 @@ protected:
 		++size_;
 		return index;
 	}	
+    virtual void shrink()
+    {
+        if(size_ <= _capacity>>2)
+        {//如果小于25%，则缩小为50%
+            auto newspace = new T[_capacity = _capacity>>1]();
+            for (size_t i = 0; i < size_; i++)
+                newspace[i] = _array[i];
+            delete[] _array;
+            _array = newspace;
+        }
+        else
+            return;
 
+    }
 protected:
     size_t size_;
 	size_t _capacity;
