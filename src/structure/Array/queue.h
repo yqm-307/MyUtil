@@ -12,11 +12,10 @@
 #include "Simple_Array.h"
 
 
-
+//deque实现方式
 namespace YqmUtil::Structure::Array
 {
 
-//思考再三需要用deque实现最佳，或者链表。STL中deque是非常复杂的，不连续空间，还需要中控器管理分段空间的映射关系。所以考虑采用双数组的方法模拟一个队列
 template<class T>
 class queue: public Simple_Array<T>
 {

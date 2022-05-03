@@ -1,5 +1,7 @@
+#pragma once
 #include "Basic_Array.h"
 #include <string.h>
+
 namespace YqmUtil::Structure::Array
 {
 

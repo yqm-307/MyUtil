@@ -1,6 +1,6 @@
 #pragma once
 
-//¸üÐÂµ±Ç°½ÚµãµÄ¸ß¶È
+//ï¿½ï¿½ï¿½Âµï¿½Ç°ï¿½Úµï¿½Ä¸ß¶ï¿½
 template<typename T>
 int AVLTree<T>::updataHeight(TreeNodePtr<T> ptr)
 {
@@ -18,7 +18,7 @@ int AVLTree<T>::updataHeight(TreeNodePtr<T> ptr)
 
 
 
-//¸üÐÂËùÓÐ×æÏÈµÄ¸ß¶È
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÈµÄ¸ß¶ï¿½
 template<typename T>
 void AVLTree<T>::updataHeightAnc(TreeNodePtr<T> ptr)
 {
@@ -32,10 +32,10 @@ void AVLTree<T>::updataHeightAnc(TreeNodePtr<T> ptr)
 
 
 
-/*		Èý¸ö½Úµã£¬ËÄ¿Å×ÓÊ÷		*/
+/*		ï¿½ï¿½ï¿½ï¿½ï¿½Úµã£¬ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½		*/
 template<typename T>
 TreeNodePtr<T> AVLTree<T>::connect34(TreeNodePtr<T> node1, TreeNodePtr<T>node2, TreeNodePtr<T>node3,
-	TreeNodePtr<T>tree1, TreeNodePtr<T>tree2, TreeNodePtr<T>tree3, TreeNodePtr<T>tree4)		//Æ½ºâ²Ù×÷£¬¸ù¾ÝÊäÈëË³ÐòÇø·Ö×óÓÒÐý
+	TreeNodePtr<T>tree1, TreeNodePtr<T>tree2, TreeNodePtr<T>tree3, TreeNodePtr<T>tree4)		//Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 	//auto parent = node1->parent;
 	node1->lc = tree1; if (tree1) tree1->parent = node1;
@@ -60,15 +60,15 @@ TreeNodePtr<T> AVLTree<T>::connect34(TreeNodePtr<T> node1, TreeNodePtr<T>node2, 
 
 
 
-//Ðý×ª½Ó¿Ú
+//ï¿½ï¿½×ªï¿½Ó¿ï¿½
 template<typename T>
 TreeNodePtr<T> AVLTree<T>::rotateAt(TreeNodePtr<T> v)
 {
-	TreeNodePtr<T> p = v->parent;	TreeNodePtr<T> g = p->parent;	//ÕÒ³öconnect34ÖÐµÄ3¸ö½Úµã
-	//Èý¸ö½Úµã¹ØÏµvÊÇËï×Ó£¬ pÊÇ¸¸Ç×£¬ gÊÇÒ¯Ò¯
-	//¸ù¾Ýnode2ÊÇ×ó×Ó½Úµã»¹ÊÇÓÒ×Ó½Úµã¿ÉÒÔÅÐ¶ÏÊ±×óÐý»¹ÊÇÓÒÐý
-	if (IsLChild(*p)) //pÊÇ×ó×ÓÊ÷£¬zig
-		if (IsLChild(*v))	//vÊÇ×ó×ÓÊ÷ ,zig
+	TreeNodePtr<T> p = v->parent;	TreeNodePtr<T> g = p->parent;	//ï¿½Ò³ï¿½connect34ï¿½Ðµï¿½3ï¿½ï¿½ï¿½Úµï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ïµvï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ pï¿½Ç¸ï¿½ï¿½×£ï¿½ gï¿½ï¿½Ò¯Ò¯
+	//ï¿½ï¿½ï¿½ï¿½node2ï¿½ï¿½ï¿½ï¿½ï¿½Ó½Úµã»¹ï¿½ï¿½ï¿½ï¿½ï¿½Ó½Úµï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (IsLChild(*p)) //pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½zig
+		if (IsLChild(*v))	//vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ,zig
 		{
 			p->parent = g->parent;
 			return connect34(v, p, g, v->lc, v->rc, p->rc, g->rc);
@@ -79,7 +79,7 @@ TreeNodePtr<T> AVLTree<T>::rotateAt(TreeNodePtr<T> v)
 			return connect34(p, v, g, p->lc, v->lc, v->rc, g->rc);
 		}
 	else					//zag
-		if (IsRChild(*v))	//vÊÇ×ó×ÓÊ÷  zag
+		if (IsRChild(*v))	//vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  zag
 		{
 			p->parent = g->parent;
 			return connect34(g, p, v, g->lc,p->lc, v->lc, v->rc);
@@ -104,22 +104,22 @@ TreeNodePtr<T> AVLTree<T>::rotateAt(TreeNodePtr<T> v)
 template<typename T>
 TreeNodePtr<T> AVLTree<T>::insert(const T& e)
 {
-	//ÏÈÅÐ¶ÏÊÇ·ñ´æÔÚ±¾½Úµã
+	//ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú±ï¿½ï¿½Úµï¿½
 	TreeNodePtr<T>& p = search(e);	if (p!=nullptr) return p;	
-	//È·¶¨´Ë½Úµã²»´æÔÚ£¬´´½¨ÐÂ½Úµã£¬ÐÂ½ÚµãÒ»¶¨ÊÇÒ¶½Úµã
+	//È·ï¿½ï¿½ï¿½Ë½Úµã²»ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½Úµã£¬ï¿½Â½Úµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½Úµï¿½
 	TreeNodePtr<T> x= p = new TreeNode<T>(e, _parent);
 	_size++;	
 
-	//ÏòÉÏÑ­»·ÖØÆ½ºâ
-	for (TreeNodePtr<T> i = _parent; i; i = i->parent)	//´Ó²åÈë½ÚµãµÄ¸¸½Úµã¿ªÊ¼£¬ÏòÉÏÖð²ãÆ½ºâ
+	//ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
+	for (TreeNodePtr<T> i = _parent; i; i = i->parent)	//ï¿½Ó²ï¿½ï¿½ï¿½Úµï¿½Ä¸ï¿½ï¿½Úµã¿ªÊ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
 	{
-		if (!AvlBalanced(*i))	//Ê§ºâ£¬Ôòµ÷ÓÃ½Ó¿Ú¸´ºâ
+		if (!AvlBalanced(*i))	//Ê§ï¿½â£¬ï¿½ï¿½ï¿½ï¿½Ã½Ó¿Ú¸ï¿½ï¿½ï¿½
 		{
-			FromParentTo(*i) = rotateAt(tallerChild(tallerChild(i)));	//Éæ¼°µÄÈý¸ö½ÚµãÖÐ½øÐÐÅÐ¶Ï£¬¼´ÅÐ¶Ï¼¸´ÎÐý×ª
+			FromParentTo(*i) = rotateAt(tallerChild(tallerChild(i)));	//ï¿½æ¼°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½ï¿½Ð¶Ï¼ï¿½ï¿½ï¿½ï¿½ï¿½×ª
 			break;
 		}
 		else
-			updataHeight(i);	//Æ½ºâ¾Í¸üÐÂ¸ß¶È£¬ÒÔ·À¸ß¶È´íÎó
+			updataHeight(i);	//Æ½ï¿½ï¿½Í¸ï¿½ï¿½Â¸ß¶È£ï¿½ï¿½Ô·ï¿½ï¿½ß¶È´ï¿½ï¿½ï¿½
 	}
 	return x;
 }
@@ -141,13 +141,13 @@ TreeNodePtr<T> AVLTree<T>::insert(const T& e)
 
 
 template<typename T>
-inline TreeNodePtr<T> tallerChild(TreeNodePtr<T> x)//¸ü¸ßµÄ×ÓÊ÷
+inline TreeNodePtr<T> tallerChild(TreeNodePtr<T> x)//ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½
 {
-	if (stature((x)->lc) > stature((x)->rc))		//×ó×ÓÊ÷¸ß£¬·µ»Ø×ó×ÓÊ÷
+	if (stature((x)->lc) > stature((x)->rc))		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return x->lc;
-	else if(stature((x)->lc) < stature((x)->rc))	//ÓÒ×ÓÊ÷¸ß£¬·µ»ØÓÒ×ÓÊ÷
+	else if(stature((x)->lc) < stature((x)->rc))	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return x->rc;
-	else  //ºÍ¸¸Ç×Í¬²àÕßÓÅÏÈ
+	else  //ï¿½Í¸ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		return (x == x->parent->lc) ? (x)->lc : (x)->rc;
 }
 
@@ -162,21 +162,21 @@ inline TreeNodePtr<T> tallerChild(TreeNodePtr<T> x)//¸ü¸ßµÄ×ÓÊ÷
 
 
 
-/*²éÕÒÄ¿±êÖµ£¬²éÕÒÊ§°Ü·µ»Ønullptr
-*	¶þ·Ö²éÕÒ
+/*ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü·ï¿½ï¿½ï¿½nullptr
+*	ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½
 */
 template<typename T>
 TreeNodePtr<T>& AVLTree<T>::search(const T& e)
 {
-	//ÌØÊâÇé¿ö£º²åÈëµÚÒ»¸ö½Úµã
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
 	if (!_root || e == _root->data) {
 		_parent = NULL;
 		return _root;
-	} //ÔÚÊ÷¸ùv´¦ÃüÖÐ
-	//printf("Ê÷¸ù²»ÊÇ½Úµã\n");
-	for (_parent = _root; ; ) { //·ñÔò£¬×Ô¶¥¶øÏÂ
+	} //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½Úµï¿½\n");
+	for (_parent = _root; ; ) { //ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
 
-		TreeNodePtr<T>& c = (e < _parent->data) ? _parent->lc : _parent->rc; //È·¶¨·½Ïò
+		TreeNodePtr<T>& c = (e < _parent->data) ? _parent->lc : _parent->rc; //È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		if (!c || e == c->data) {
 			return c;
@@ -194,37 +194,37 @@ TreeNodePtr<T>& AVLTree<T>::search(const T& e)
 
 
 
-/*É¾³ý¾ÍÊÇÏÈÉ¾³ý½Úµã£¬È»ºó¸ù¾ÝÉ¾³ý½ÚµãÇ°ºó£¬ÏòÉÏÆ½ºâ£¬Æ½ºâ²ßÂÔºÍinsertÒ»Ñù£¬Ö÷Òª¾ÍÊÇremoveÒ»¸ö½Úµã*/
+/*É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½Úµã£¬È»ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½Úµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½â£¬Æ½ï¿½ï¿½ï¿½ï¿½Ôºï¿½insertÒ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½removeÒ»ï¿½ï¿½ï¿½Úµï¿½*/
 template<typename T>
 bool AVLTree<T>::remove(const T& e)
 {
-	//ÏÈÅÐ¶ÏÊÇ·ñ´æÔÚ±¾½Úµã
-	TreeNodePtr<T>& x = search(e);	if (!x) return false;	//½Úµã²»´æÔÚ£¬·µ»Ø´íÎó
-	//È·¶¨´Ë½Úµã²»´æÔÚ£¬´´½¨ÐÂ½Úµã£¬ÐÂ½ÚµãÒ»¶¨ÊÇÒ¶½Úµã
+	//ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú±ï¿½ï¿½Úµï¿½
+	TreeNodePtr<T>& x = search(e);	if (!x) return false;	//ï¿½Úµã²»ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½Ø´ï¿½ï¿½ï¿½
+	//È·ï¿½ï¿½ï¿½Ë½Úµã²»ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½Úµã£¬ï¿½Â½Úµï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½Úµï¿½
 	{
-		TreeNodePtr<T> w = x; //Êµ¼Ê±»Õª³ýµÄ½Úµã£¬³õÖµÍ¬x
-		TreeNodePtr<T> succ = NULL; //Êµ¼Ê±»É¾³ý½ÚµãµÄ½ÓÌæÕß
-		if (!x->lc) //Èô*xµÄ×ó×ÓÊ÷Îª¿Õ£¬Ôò¿É
-			succ = x = x->rc; //Ö±½Ó½«*xÌæ»»ÎªÆäÓÒ×ÓÊ÷
-		else if (!x->rc) //ÈôÓÒ×ÓÊ÷Îª¿Õ£¬Ôò¿É
-			succ = x = x->lc; //¶Ô³ÆµØ´¦Àí¡ª¡ª×¢Òâ£º´ËÊ±succ != NULL
-		else { //Èô×óÓÒ×ÓÊ÷¾ù´æÔÚ£¬ÔòÑ¡ÔñxµÄÖ±½Óºó¼Ì×÷ÎªÊµ¼Ê±»Õª³ý½Úµã£¬Îª´ËÐèÒª
-			w = w->succ(); //£¨ÔÚÓÒ×ÓÊ÷ÖÐ£©ÕÒµ½*xµÄÖ±½Óºó¼Ì*w
-			std::swap(x->data, w->data); //½»»»*xºÍ*wµÄÊý¾ÝÔªËØ
+		TreeNodePtr<T> w = x; //Êµï¿½Ê±ï¿½Õªï¿½ï¿½ï¿½Ä½Úµã£¬ï¿½ï¿½ÖµÍ¬x
+		TreeNodePtr<T> succ = NULL; //Êµï¿½Ê±ï¿½É¾ï¿½ï¿½ï¿½Úµï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if (!x->lc) //ï¿½ï¿½*xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½
+			succ = x = x->rc; //Ö±ï¿½Ó½ï¿½*xï¿½æ»»Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		else if (!x->rc) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½
+			succ = x = x->lc; //ï¿½Ô³ÆµØ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½â£ºï¿½ï¿½Ê±succ != NULL
+		else { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½xï¿½ï¿½Ö±ï¿½Óºï¿½ï¿½ï¿½ï¿½ÎªÊµï¿½Ê±ï¿½Õªï¿½ï¿½ï¿½Úµã£¬Îªï¿½ï¿½ï¿½ï¿½Òª
+			w = w->succ(); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Òµï¿½*xï¿½ï¿½Ö±ï¿½Óºï¿½ï¿½*w
+			std::swap(x->data, w->data); //ï¿½ï¿½ï¿½ï¿½*xï¿½ï¿½*wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
 			TreeNodePtr<T> u = w->parent;
-			((u == x) ? u->rc : u->lc) = succ = w->rc; //¸ôÀë½Úµã*w
+			((u == x) ? u->rc : u->lc) = succ = w->rc; //ï¿½ï¿½ï¿½ï¿½Úµï¿½*w
 		}
-		_parent = w->parent; //¼ÇÂ¼Êµ¼Ê±»É¾³ý½ÚµãµÄ¸¸Ç×
-		if (succ) succ->parent = _parent; //²¢½«±»É¾³ý½ÚµãµÄ½ÓÌæÕßÓëhotÏàÁª
+		_parent = w->parent; //ï¿½ï¿½Â¼Êµï¿½Ê±ï¿½É¾ï¿½ï¿½ï¿½Úµï¿½Ä¸ï¿½ï¿½ï¿½
+		if (succ) succ->parent = _parent; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½Úµï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½hotï¿½ï¿½ï¿½ï¿½
 	}
-	_size--;	//ÕâÀïÊÇ-1
+	_size--;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1
 
-	//ÏòÉÏÑ­»·ÖØÆ½ºâ
-	for (TreeNodePtr<T> i = _parent; i; i = i->parent)	//´Ó²åÈë½ÚµãµÄ¸¸½Úµã¿ªÊ¼£¬ÏòÉÏÖð²ãÆ½ºâ
+	//ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
+	for (TreeNodePtr<T> i = _parent; i; i = i->parent)	//ï¿½Ó²ï¿½ï¿½ï¿½Úµï¿½Ä¸ï¿½ï¿½Úµã¿ªÊ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
 	{
-		if (!AvlBalanced(*i))	//Ê§ºâ£¬Ôòµ÷ÓÃ½Ó¿Ú¸´ºâ
-			FromParentTo(*i) = rotateAt(tallerChild(tallerChild(i)));	//Éæ¼°µÄÈý¸ö½ÚµãÖÐ½øÐÐÅÐ¶Ï£¬¼´ÅÐ¶Ï¼¸´ÎÐý×ª
-		updataHeight(i);	//É¾³ýÊ÷½Úµã£¬¸ß¶È¸üÈÝÒ×¸Ä±ä£¬ÐèÒªÒÀ´Î¸üÐÂ½Úµã
+		if (!AvlBalanced(*i))	//Ê§ï¿½â£¬ï¿½ï¿½ï¿½ï¿½Ã½Ó¿Ú¸ï¿½ï¿½ï¿½
+			FromParentTo(*i) = rotateAt(tallerChild(tallerChild(i)));	//ï¿½æ¼°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ð½ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½ï¿½Ð¶Ï¼ï¿½ï¿½ï¿½ï¿½ï¿½×ª
+		updataHeight(i);	//É¾ï¿½ï¿½ï¿½ï¿½ï¿½Úµã£¬ï¿½ß¶È¸ï¿½ï¿½ï¿½ï¿½×¸Ä±ä£¬ï¿½ï¿½Òªï¿½ï¿½ï¿½Î¸ï¿½ï¿½Â½Úµï¿½
 	}
 	return true;
 	

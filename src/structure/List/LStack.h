@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2022
  * 
  */
+#pragma once
+
 namespace YqmUtil::Structure::List
 {
 

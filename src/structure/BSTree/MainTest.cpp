@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
@@ -13,7 +15,7 @@ void print(TreeNodePtr<T> ptr)
 int main()
 {
 	vector<int> nums;
-	cout << "¹¹ÔìÒ»¿ÎAVLÊ÷" << endl;
+	cout << "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½AVLï¿½ï¿½" << endl;
 	AVLTree<int> Tree;
 	srand((uint32_t)time(NULL));
 
@@ -22,23 +24,23 @@ int main()
 		nums.push_back(rand() % 100);
 		Tree.insert(nums.back());
 	}
-	printf("\n\nÏÈÐò±éÀú\n");
+	printf("\n\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	Tree.traverse<void(TreeNodePtr<int>)>(1, print);
-	printf("\nÖÐÐò±éÀú\n");
+	printf("\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	Tree.traverse<void(TreeNodePtr<int>)>(2, print);
 	for (int i = 0; i < 5; ++i) {
-		printf("É¾³ýÔªËØ: %d\n",nums[i]);
+		printf("É¾ï¿½ï¿½Ôªï¿½ï¿½: %d\n",nums[i]);
 		Tree.remove(nums[i]);
 	}
 
-	printf("\n\nÏÈÐò±éÀú\n");
+	printf("\n\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	Tree.traverse<void(TreeNodePtr<int>)>(1, print);
-	printf("\nÖÐÐò±éÀú\n");
+	printf("\nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 	Tree.traverse<void(TreeNodePtr<int>)>(2, print);
 
-	printf("\n\nDFS £º\n");
+	printf("\n\nDFS ï¿½ï¿½\n");
 	Tree.DFS<void(TreeNodePtr<int>)>(print);
-	printf("\n\nBFS £º\n");
+	printf("\n\nBFS ï¿½ï¿½\n");
 	Tree.BFS<void(TreeNodePtr<int>)>(print);
 	printf("\nover\n");
 	system("pause");
