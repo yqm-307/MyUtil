@@ -14,7 +14,7 @@
 
 namespace YqmUtil::Structure::List
 {
-template<typename T,class Node = ListNode<T>>
+template<typename T,class Node = DListNode<T>>
 class DLinkList:public Basic_List<T,Node>
 {
 public:
@@ -23,8 +23,8 @@ public:
 public:
     DLinkList()
     {
-        header = new ListNode<T>;
-        trailer = new ListNode<T>;
+        header = new DListNode<T>;
+        trailer = new DListNode<T>;
         header->pred = nullptr;
         header->succ = trailer;
         trailer->pred = header;

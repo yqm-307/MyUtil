@@ -2,20 +2,15 @@
 常用头文件和数据结构等工具
 
 
-## 命名空间结构
+## 当前模块
 
-    namespace YUtil
-    {
-        namespace structure
-        {
-            namespace Array
-            {//数组
-            }
-            namespace List
-            {//链表
-            }
-        }
-        namespace timer
-        {
-        }
-    }
+### 1、常用数据结构
+    基于数组的栈、队列，基于链表的栈、队列。avl树等
+    todo 优先级队列、最大(小)堆。
+### 2、异步定时器队列
+    时间轮实现
+### 3、线程池
+    线程池，闲置线程挂起，工作时唤醒。
+### 4、常用类
+    日志、noncopytable、enable_shared_of_this 等class。
+

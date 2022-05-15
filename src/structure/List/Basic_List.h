@@ -1,6 +1,6 @@
 #pragma once
 #include <cstddef>
-#include "DefaultListNode.h"
+#include "DListNode.h"
 
 
 //template<class T>
@@ -10,7 +10,7 @@ namespace YqmUtil::Structure::List
 
 
 
-template<class T,class Node = ListNode<T>>
+template<class T,class Node = DListNode<T>>
 class Basic_List
 {
 public:
