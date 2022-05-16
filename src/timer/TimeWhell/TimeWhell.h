@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <TimeTask.h>
+#include <unistd.h>
 #include "TimeQueue.h"
 #include "src/Logger/Logger.h"
 #include "src/threadpool/Thread.h"
@@ -15,11 +16,14 @@ using namespace std::chrono;
 class YThreadPool;
 
 
-//精度要毫秒级
 class TimeWhell
 {
 public:
-    TimeWhell();
+    /**
+     * @brief Construct a new Time Whell object
+     * @param minInterval  时间轮精度 单位ms，最小1ms
+     */
+    TimeWhell(TICK_INTERVAL minInterval);
     /**
      * @brief 时钟轮转，不停滴答
      */
@@ -35,8 +39,13 @@ public:
     void tick();
 private:
     threadpool::Thread _main;
+    threadpool::ThreadPool<TimeOutCallBack> _pool;
     std::mutex _mutex;
     TimeQueue _tasktable;   
+    Whell _clock;
+    std::atomic_bool _running;
+    TICK_INTERVAL _tick;
+    std::mutex _addtask;
 };
 
 }
