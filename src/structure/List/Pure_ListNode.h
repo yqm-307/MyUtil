@@ -1,5 +1,5 @@
-
-namespace YqmUtil::Structure::List
+#pragma
+namespace YUtil::Structure::List
 {
 template<class T>
 struct PureListNode

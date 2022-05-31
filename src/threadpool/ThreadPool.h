@@ -16,10 +16,10 @@
 #include <condition_variable>   //cv
 #include <cassert>
 #include "Thread.h"		//封装线程
-#include "src/Logger/Logger.h"
+#include "../Logger/Logger.h"
 
 
-namespace YqmUtil::threadpool
+namespace YUtil::threadpool
 {
 
 enum ThreadPoolErrnoCode{

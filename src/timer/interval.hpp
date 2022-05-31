@@ -11,7 +11,7 @@
 #include "universal.h"
 
 
-namespace YqmUtil::timer
+namespace YUtil::timer
 {
 
 class interval

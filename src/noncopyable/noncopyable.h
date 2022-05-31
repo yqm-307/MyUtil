@@ -1,6 +1,6 @@
 #pragma once
 
-namespace YqmUtil
+namespace YUtil
 {
 class noncopyable 
 {

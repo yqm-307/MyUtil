@@ -11,7 +11,7 @@
 #pragma once
 #include "Simple_Array.h"
 
-namespace YqmUtil::Structure::Array
+namespace YUtil::Structure::Array
 {
 template<class T>
 class stack: public Simple_Array<T>

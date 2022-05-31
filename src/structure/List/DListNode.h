@@ -1,7 +1,7 @@
 #pragma once
 #include "Pure_ListNode.h"
 
-namespace YqmUtil::Structure::List
+namespace YUtil::Structure::List
 {
 
 typedef int Rank;		//秩

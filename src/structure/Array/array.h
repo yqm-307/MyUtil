@@ -1,7 +1,7 @@
 #pragma once
 #include "Basic_Array.h"
 
-namespace YqmUtil::Structure::Array
+namespace YUtil::Structure::Array
 {
 
 template<class T>

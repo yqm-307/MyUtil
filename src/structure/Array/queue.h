@@ -13,7 +13,7 @@
 
 
 //deque实现方式
-namespace YqmUtil::Structure::Array
+namespace YUtil::Structure::Array
 {
 
 template<class T>

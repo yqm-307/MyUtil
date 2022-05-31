@@ -12,7 +12,7 @@
 #include "Basic_List.h"
 #include <functional>
 
-namespace YqmUtil::Structure::List
+namespace YUtil::Structure::List
 {
 template<typename T,class Node = DListNode<T>>
 class DLinkList:public Basic_List<T,Node>

@@ -5,7 +5,7 @@
 
 //template<class T>
 //using ListNodePtr = ListNode<T>*;
-namespace YqmUtil::Structure::List
+namespace YUtil::Structure::List
 {
 
 

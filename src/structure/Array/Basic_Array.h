@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 
-namespace YqmUtil::Structure::Array
+namespace YUtil::Structure::Array
 {
 #define INITSIZE 8
 

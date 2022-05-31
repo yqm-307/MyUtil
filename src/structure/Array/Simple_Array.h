@@ -2,7 +2,7 @@
 #include "Basic_Array.h"
 #include <string.h>
 
-namespace YqmUtil::Structure::Array
+namespace YUtil::Structure::Array
 {
 
 template<class T>

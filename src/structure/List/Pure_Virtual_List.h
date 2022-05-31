@@ -1,6 +1,7 @@
+#pragma once
 #include "Pure_ListNode.h"
 
-namespace YqmUtil::Structure::List
+namespace YUtil::Structure::List
 {
 
 template<class T,class Node = PureListNode<T>>

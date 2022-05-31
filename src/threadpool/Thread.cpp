@@ -1,7 +1,7 @@
 #include "Thread.h"
 #include <unistd.h>
 
-using namespace YqmUtil::threadpool;
+using namespace YUtil::threadpool;
 
 Thread::Thread()
     :_run(false),

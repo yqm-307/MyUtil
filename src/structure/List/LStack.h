@@ -10,7 +10,7 @@
  */
 #pragma once
 
-namespace YqmUtil::Structure::List
+namespace YUtil::Structure::List
 {
 
 }

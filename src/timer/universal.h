@@ -1,7 +1,7 @@
 #pragma once
 #include <chrono>
 
-namespace YqmUtil::timer
+namespace YUtil::timer
 {
     typedef std::chrono::nanoseconds ns;
     typedef std::chrono::microseconds us;

@@ -11,11 +11,11 @@
 #include <functional>
 #include <atomic>
 
-#include "Logger.h"
+#include "../Logger/Logger.h"
 
 
 
-namespace YqmUtil::threadpool
+namespace YUtil::threadpool
 {
 enum ThreadStatus
 {
