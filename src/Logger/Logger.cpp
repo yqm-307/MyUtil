@@ -1,5 +1,3 @@
-#include "Logger.h"
-
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -7,10 +5,14 @@
 #include <sys/time.h>
 #include <stdarg.h>
 #include <string.h>
+#include <assert.h>
+#include "./Logger.h"
+
+using namespace YUtil::Log;
+//#define YNET_LOG_BUFFER
 
 
-namespace YqmUtil::Logger
-{
+
 
 Logger* Logger::GetInstance(std::string name)
 {
@@ -18,7 +20,42 @@ Logger* Logger::GetInstance(std::string name)
     return _instance;
 }
 
+#ifdef YNET_LOG_BUFFER
+Logger::Logger(std::string name)
+    :_pendingwriteindex(0),
+    _nowindex(0),
+    _nowsize(ARRAY_NUM)
+{
+    for(int i=0;i<ARRAY_NUM;++i)
+    {
+        _buffers.push_back(std::pair<int,char*>((i+1)%ARRAY_NUM,new char[ARRAY_SIZE]));
+    }
+    
 
+    filename = name;
+    _openfd = open(filename.c_str(),O_RDWR|O_CREAT|O_APPEND,S_IRWXU);  //读写打开文件
+    work = [this](){
+        while(1)
+        {
+            std::unique_lock<std::mutex> loc(_condlock);
+            while(!hasfulled()) //
+                _cond.wait(loc);
+            const char* log = GetFullArray();
+            //确保所有数据可以写入
+            int fullnum = ARRAY_SIZE;
+            int re=0;
+            while(fullnum!=0)
+            {
+                re = write(_openfd,log,ARRAY_SIZE);
+                assert(re>=0); 
+                fullnum-=re;     
+            }
+
+        }
+    };
+    _writeThread = new std::thread(work);
+}
+#else
 Logger::Logger(std::string name)
 {
     filename = name;
@@ -31,21 +68,93 @@ Logger::Logger(std::string name)
                 continue;
             this->Dequeue(line);                //取
             write(this->_openfd,line.c_str(),line.size());  //写
-            //flush(this->_openfd);
         }
     };
     _writeThread = new std::thread(work);
-    //_writeThread->detach();     //没必要
 }
-//析构显得不是很必要
+#endif
+
+
+
 Logger::~Logger()
 {
+#ifdef YNET_LOG_BUFFER
+    next(); //写入所有数据
+#endif
     close(_openfd); //关闭文件描述符
 }
 
-/*
-    出队只有一个线程，不需要加锁
-*/
+
+
+
+
+#ifdef YNET_LOG_BUFFER
+//写入缓冲
+void Logger::Enqueue(std::string log)
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+
+    int log_remain = log.size();    //日志剩余
+    int wd = 0;                     //已写
+    const char* logc = log.c_str(); 
+
+    while(log_remain != 0)
+    {
+        int worklen = strlen(workarray());          
+        int gap = ARRAY_SIZE-strlen(workarray());   //当前数组可写入
+        if(log_remain > gap)
+        {
+            log_remain-=gap;
+            strncpy(workarray()+worklen,logc+wd,gap);
+            wd+=gap;
+            next();
+        }
+        else
+        {
+            strncpy(workarray()+worklen,logc+wd,log_remain);
+            log_remain=0;
+        }
+    }
+}
+
+const char* Logger::GetFullArray()
+{
+    const char* ret = _buffers[_pendingwriteindex].second;
+    _pendingwriteindex = _buffers[_pendingwriteindex].first;
+    return ret;
+}
+
+
+void Logger::next()
+{
+    //是否需要扩张
+    if((_nowindex+1)%_nowsize == _pendingwriteindex)
+    {//扩张
+        int nextnext = _buffers[_nowindex].first;
+        _buffers.push_back(std::pair<int,char*>(nextnext,new char[ARRAY_SIZE]));
+        _buffers[_nowindex].first = _nowsize;
+        _nowsize++;
+        _nowindex = _buffers[_nowindex].first;
+    }
+    else//正常移动
+    {
+        _nowindex = _buffers[_nowindex].first;  //下一个节点
+        memset(workarray(),'\0',ARRAY_SIZE);
+    }
+    _cond.notify_all();
+}
+
+void Logger::nextPending()
+{
+}
+#else
+
+void Logger::Enqueue(std::string log)
+{
+    std::lock_guard<std::mutex> lock(_mutex);
+    _queue.push(log);
+}
+
 bool Logger::Dequeue(std::string& str)
 {
     std::lock_guard<std::mutex> lock(_mutex);
@@ -56,14 +165,9 @@ bool Logger::Dequeue(std::string& str)
     return true;
 }
 
-/*
-    可能多个线程调用
-*/
-void Logger::Enqueue(std::string log)
-{
-    std::lock_guard<std::mutex> lock(_mutex);
-    _queue.push(log);
-}
+#endif
+
+
 
 void Logger::Log(LOGLEVEL level ,const std::string str)
 {
@@ -118,20 +222,15 @@ void Logger::Log(LOGLEVEL level ,const std::string str)
 
 
 
-
-std::string format(const char* fmt, ...)
+std::string YUtil::Log::format(const char* fmt, ...)
 {
     char        data[128];
     size_t      i = 0;
     va_list     ap;
-
-
 
     va_start(ap, fmt);
     vsnprintf(data + i, 128 - i, fmt, ap);
     va_end(ap);
 
     return std::string(data);
-
-}
 }

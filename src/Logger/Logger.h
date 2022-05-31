@@ -3,17 +3,27 @@
 
 #include <queue>
 #include <thread>
+#include <atomic>
+#include <memory>
 #include <condition_variable>   //mutex
-#include <functional>
-#include <chrono>
-#include "../noncopyable/noncopyable.h"
 
-//默认全部打印
-#ifndef LOG_LEVEL
-#define LOG_LEVEL -1 
+#include "src/noncopyable/noncopyable.h"
+
+#include <functional>
+
+#if LOGGER_BUFFER_OFF
+#define YNET_LOG_BUFFER
 #endif
 
-namespace YqmUtil::Logger
+#ifndef LOG_LEVEL
+#define LOG_LEVEL -1
+#endif
+
+#define ARRAY_NUM 8
+#define ARRAY_SIZE 1024*4   //4kb   linux下每次读写为4kb时，用户cpu时间和系统cpu时间最短
+
+
+namespace  YUtil::Log
 {
 
 enum LOGLEVEL
@@ -36,39 +46,74 @@ static const char* LeveL[6]{
 };
 
 //缓冲日志
-class Logger : YqmUtil::noncopyable
+
+class Logger:noncopyable
 {
 public:
     static Logger* GetInstance(std::string name = "./log.txt");
     void Log(LOGLEVEL level,const std::string log);
     static void SetFileName(std::string name);
+
 private:
     Logger(std::string);
     ~Logger();
+
+#ifdef YNET_LOG_BUFFER
+    const char* GetFullArray();
+    char* workarray(){return _buffers[_nowindex].second;}
+    /**
+     * @brief nowindex 前进
+     */
+    void next();
+    /**
+     * @brief Pendingwriteindex 前进
+     */
+    void nextPending();
+    bool hasfulled(){return _pendingwriteindex!=_nowindex;}
+#else
     bool Dequeue(std::string& str);
+#endif
     void Enqueue(std::string log);
+   
+    
+
+    //todo flush 服务器关闭前，主动冲洗剩余内存
 private:
+
+#ifdef YNET_LOG_BUFFER
+    //buffer，第一个值是下一个节点下标。第二个值是储存数据
+    std::vector<std::pair<int,char*>> _buffers;    //缓冲区
+    int _nowsize;
+    int _pendingwriteindex;     //待写入
+    int _nowindex;              //当前
+    std::condition_variable _cond;
+    std::mutex _condlock;
+#else
     std::queue<std::string> _queue;
-    std::thread* _writeThread;       //不断dequeue
+    std::thread* _writeThread;      //不断dequeue
     std::mutex _mutex;
     std::string filename;           //文件名可配置
     std::function<void ()>  work;
     int _openfd;                    //文件
+#endif
+
+
 };
 
 std::string format(const char* fmt, ...);
 
+
+
+
+#define TRACE(fmt, ...)     YUtil::Log::Logger::GetInstance()->Log(YUtil::Log::LOG_TRACE, YUtil::Log::format(fmt,##__VA_ARGS__))
+#define DEBUG(fmt, ...)     YUtil::Log::Logger::GetInstance()->Log(YUtil::Log::LOG_DEBUG, YUtil::Log::format(fmt,##__VA_ARGS__))
+#define INFO(fmt, ...)      YUtil::Log::Logger::GetInstance()->Log(YUtil::Log::LOG_INFO,  YUtil::Log::format(fmt,##__VA_ARGS__))
+#define WARN(fmt, ...)      YUtil::Log::Logger::GetInstance()->Log(YUtil::Log::LOG_WARN,  YUtil::Log::format(fmt,##__VA_ARGS__))
+#define ERROR(fmt, ...)     YUtil::Log::Logger::GetInstance()->Log(YUtil::Log::LOG_ERROR, YUtil::Log::format(fmt,##__VA_ARGS__))
+#define FATAL(fmt, ...)     YUtil::Log::Logger::GetInstance()->Log(YUtil::Log::LOG_FATAL, YUtil::Log::format(fmt,##__VA_ARGS__))
+
+
 }
-
-#define TRACE(fmt, ...)     YqmUtil::Logger::Logger::GetInstance()->Log(YqmUtil::Logger::LOG_TRACE, YqmUtil::Logger::format(fmt,##__VA_ARGS__))
-#define DEBUG(fmt, ...)     YqmUtil::Logger::Logger::GetInstance()->Log(YqmUtil::Logger::LOG_DEBUG, YqmUtil::Logger::format(fmt,##__VA_ARGS__))
-#define INFO(fmt, ...)      YqmUtil::Logger::Logger::GetInstance()->Log(YqmUtil::Logger::LOG_INFO,  YqmUtil::Logger::format(fmt,##__VA_ARGS__))
-#define WARN(fmt, ...)      YqmUtil::Logger::Logger::GetInstance()->Log(YqmUtil::Logger::LOG_WARN,  YqmUtil::Logger::format(fmt,##__VA_ARGS__))
-#define ERROR(fmt, ...)     YqmUtil::Logger::Logger::GetInstance()->Log(YqmUtil::Logger::LOG_ERROR, YqmUtil::Logger::format(fmt,##__VA_ARGS__))
-#define FATAL(fmt, ...)     YqmUtil::Logger::Logger::GetInstance()->Log(YqmUtil::Logger::LOG_FATAL, YqmUtil::Logger::format(fmt,##__VA_ARGS__))
-
-
-
 
 
 #endif
